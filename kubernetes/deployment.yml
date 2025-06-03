@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-ui
+  labels:
+    app: product-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-ui
+  template:
+    metadata:
+      labels:
+        app: product-ui
+    spec:
+      containers:
+        - name: product-ui
+          image: davidcamelo/product-ui:main
+          ports:
+            - containerPort: 4173
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  revisionHistoryLimit: 1
