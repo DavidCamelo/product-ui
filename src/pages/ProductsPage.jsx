@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { productService, userService } from '../services/api';
 import Modal from 'components_ui/Modal';
+import ConfirmationModal from 'components_ui/ConfirmationModal';
 import Table from 'components_ui/Table';
 import Form from 'components_ui/Form';
-import './products.css';
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [currentItem, setCurrentItem] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
     const [error, setError] = useState(null);
 
     const productColumns = [
       { key: 'id', header: 'ID' },
       { key: 'name', header: 'Name' },
       { key: 'description', header: 'Description' },
-      { key: 'user', header: 'User', render: (row) => row.user.error ? `${row.user.error.message}` : `${row.user.name} ${row.user.lastName}` },
+      { key: 'user', header: 'User', render: (row) => row.user ? `${row.user.name} ${row.user.lastName}`: 'N/A' },
     ];
 
     const productFields = [
@@ -58,7 +59,7 @@ const ProductsPage = () => {
                 await productService.createProduct(product);
             }
             fetchProductsAndUsers();
-            setIsModalOpen(false);
+            setIsFormModalOpen(false);
             setCurrentItem(null);
         } catch (error) {
             setError(error.message);
@@ -67,23 +68,29 @@ const ProductsPage = () => {
 
     const handleEdit = (product) => {
         setCurrentItem(product);
-        setIsModalOpen(true);
+        setIsFormModalOpen(true);
     };
 
-    const handleDelete = async (id) => {
-       if (window.confirm('Are you sure you want to delete this product?')) {
+    const handleDelete = (id) => {
+       setItemToDelete(id);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (itemToDelete) {
             try {
                 setError(null);
-                await productService.deleteProduct(id);
+                await productService.deleteProduct(itemToDelete);
                 fetchProductsAndUsers();
             } catch (error) {
                 setError(error.message);
+            } finally {
+                setItemToDelete(null);
             }
         }
     };
 
     const handleCancel = () => {
-        setIsModalOpen(false);
+        setIsFormModalOpen(false);
         setCurrentItem(null);
         setError(null);
     };
@@ -92,10 +99,10 @@ const ProductsPage = () => {
         <div>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-3xl font-bold">Product Management</h1>
-                <button onClick={() => { setCurrentItem({}); setIsModalOpen(true); }} className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Add Product</button>
+                <button onClick={() => { setCurrentItem({}); setIsFormModalOpen(true); }} className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Add Product</button>
             </div>
 
-            <Modal isOpen={isModalOpen} onClose={handleCancel} title={currentItem?.id ? 'Edit Product' : 'Add Product'}>
+            <Modal isOpen={isFormModalOpen} onClose={handleCancel} title={currentItem?.id ? 'Edit Product' : 'Add Product'}>
                 {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">{error}</div>}
                 <Form
                     fields={productFields}
@@ -104,6 +111,15 @@ const ProductsPage = () => {
                     onCancel={handleCancel}
                 />
             </Modal>
+
+            <ConfirmationModal
+                isOpen={!!itemToDelete}
+                onClose={() => setItemToDelete(null)}
+                onConfirm={handleConfirmDelete}
+                title="Confirm Deletion"
+            >
+                Are you sure you want to delete this product? This action cannot be undone.
+            </ConfirmationModal>
 
             <Table columns={productColumns} data={products} onEdit={handleEdit} onDelete={handleDelete} />
         </div>
