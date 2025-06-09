@@ -12,7 +12,7 @@ export default defineConfig({
     name: 'user-ui',
     filename: 'remoteEntry.js',
     exposes: {
-      './Product': './src/product/Product.jsx'
+      './ProductsPage': './src/pages/ProductsPage.jsx'
     },
     remotes: {
       components_ui: 'https://components-ui.davidcamelo.com/assets/remoteEntry.js'
