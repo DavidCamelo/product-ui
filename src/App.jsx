@@ -2,7 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import Product from './product/Product'
+import { InputTest } from 'components_ui/InputTest'
+import { List } from 'components_ui/List'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +11,8 @@ function App() {
   return (
     <>
       <div>
-        <Product />
+        <InputTest value={count} onChange={setCount} onSubmit={() => setCount((count) => count + 1)} />
+        <List items={["Product UI", "Learn Vite", "Make an awesome app"]} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
