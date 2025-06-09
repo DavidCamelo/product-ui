@@ -20,7 +20,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => (
                         <td className="py-3 px-4">{product.id}</td>
                         <td className="py-3 px-4">{product.name}</td>
                         <td className="py-3 px-4">{product.description}</td>
-                        <td className="py-3 px-4">{product.user ? `${product.user.name} ${product.user.lastName}` : 'N/A'}</td>
+                        <td className="py-3 px-4">{product.user.error ? `${product.user.error.message}` : `${product.user.name} ${product.user.lastName}`}</td>
                         <td className="py-3 px-4 text-center">
                             <button onClick={() => onEdit(product)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</button>
                             <button onClick={() => onDelete(product.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
