@@ -18,7 +18,7 @@ const ProductsPage = () => {
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Name' },
     { key: 'description', header: 'Description' },
-    { key: 'user', header: 'User', render: (row) => row.user ? `${row.user.name} ${row.user.lastName}`: 'N/A' },
+    { key: 'user', header: 'User', render: (row) => row.user.error ? `${row.user.error.message}` : `${row.user.name} ${row.user.lastName}`},
   ];
 
   const productFields = [
