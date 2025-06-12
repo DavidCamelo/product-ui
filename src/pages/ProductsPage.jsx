@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { productService, userService } from '../services/api';
-import Modal from 'components_ui/Modal';
-import ConfirmationModal from 'components_ui/ConfirmationModal';
-import Table from 'components_ui/Table';
-import Form from 'components_ui/Form';
-import './products.css';
+import { Modal } from 'components_ui/Modal';
+import { ConfirmationModal } from 'components_ui/ConfirmationModal';
+import { Table } from 'components_ui/Table';
+import { Form } from 'components_ui/Form';
+import './products-page.css';
 
-const ProductsPage = () => {
+export const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
   const [currentItem, setCurrentItem] = useState(null);
@@ -126,5 +126,3 @@ const ProductsPage = () => {
     </div>
   );
 };
-
-export default ProductsPage;
