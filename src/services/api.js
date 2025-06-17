@@ -1,6 +1,7 @@
 // API services for interacting with the backend
 const createApiService = (resource) => {
     const API_URL = `https://spring-boot.davidcamelo.com/${resource}`;
+    //const API_URL = `http://api-gateway:8080/${resource}`;
 
     const handleResponse = async (response) => {
         if (!response.ok) {
@@ -20,6 +21,11 @@ const createApiService = (resource) => {
             return handleResponse(response);
         },
         create: async (item) => {
+            if (item.user) {
+                item.user = { id: item.user };
+            } else {
+                delete item.user;
+            }
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -28,6 +34,11 @@ const createApiService = (resource) => {
             return handleResponse(response);
         },
         update: async (id, item) => {
+            if (item.user) {
+                item.user = { id: item.user };
+            } else {
+                delete item.user;
+            }
             const response = await fetch(`${API_URL}/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
