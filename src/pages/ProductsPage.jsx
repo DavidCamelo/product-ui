@@ -10,8 +10,8 @@ export const ProductsPage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const usersData = await userService.getAll();
-                setUsers(usersData);
+                const usersData = await userService.getAll({});
+                setUsers(usersData.content);
             } catch (error) {
                 console.error("Failed to load users for product form", error);
             } finally {

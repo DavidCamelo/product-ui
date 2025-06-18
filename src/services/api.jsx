@@ -16,7 +16,15 @@ const createApiService = (resource) => {
     };
 
     return {
-        getAll: async () => {
+        getAll: async ({ pageNumber = null, pageSize = null, sortBy = null, sortDirection = null }) => {
+            if (pageNumber && pageSize) {
+                if (sortBy && sortDirection) {
+                    const response = await fetch(API_URL + `?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&sortBy=${sortBy}&sortDirection=${sortDirection}`);
+                    return handleResponse(response);
+                }
+                const response = await fetch(API_URL + `?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`);
+                return handleResponse(response);
+            }
             const response = await fetch(API_URL);
             return handleResponse(response);
         },
