@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ResourcePage } from 'components_ui/ResourcePage';
+import { Spinner } from 'components_ui/Spinner';
 import { productService, userService } from '../services/api';
 import './products-page.css';
 
@@ -45,7 +46,7 @@ export const ProductsPage = () => {
     };
 
     if (loading) {
-        return <div className="text-center p-4">Loading user data...</div>;
+        return <div className="loading-spinner-container"><Spinner size="large" /></div>;
     }
 
     return <ResourcePage {...productConfig} />;
