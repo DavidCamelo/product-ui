@@ -11,7 +11,7 @@ export const ProductsPage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const usersData = await userService(false).getAll({});
+                const usersData = await userService.getAll({});
                 setUsers(usersData.content);
             } catch (error) {
                 console.error("Failed to load users for product form", error);
@@ -25,7 +25,7 @@ export const ProductsPage = () => {
     const productConfig = {
         title: 'Product Management',
         resourceName: 'Product',
-        service: productService(false),
+        service: productService,
         columns: [
             { key: 'id', header: 'ID' },
             { key: 'name', header: 'Name' },
