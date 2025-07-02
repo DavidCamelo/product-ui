@@ -32,7 +32,7 @@ export const ProductsPage = () => {
             { key: 'user', header: 'User', render: (row) => row.user ? (row.user.error ?  `${row.user.error.message}` : `${row.user.name} ${row.user.lastName}`) : 'N/A' },
         ],
         formFields: [
-            { name: 'name', label: 'Name', type: 'text' },
+            { name: 'name', label: 'Name', type: 'text', required: true },
             { name: 'description', label: 'Description', type: 'text' },
             {
                 name: 'user',
