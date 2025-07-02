@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ResourcePage } from 'components_ui/ResourcePage';
 import { Spinner } from 'components_ui/Spinner';
 import { productService, userService } from 'components_ui/api';
-import './products-page.css';
 
 export const ProductsPage = () => {
     const [users, setUsers] = useState([]);
