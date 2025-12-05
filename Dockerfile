@@ -15,7 +15,7 @@ server {
     index index.html;
     gzip on;
     gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-    location / {
+    location ~* \.(js|css|json|map|png|jpg|jpeg|gif|ico|svg)$ {
         add_header 'Access-Control-Allow-Origin' '*';
         add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
@@ -28,6 +28,9 @@ server {
             add_header 'Content-Length' 0;
             return 204;
         }
+        try_files $uri =404;
+    }
+    location / {
         try_files $uri $uri/ /index.html;
     }
 }
