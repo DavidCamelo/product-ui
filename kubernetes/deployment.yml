@@ -18,7 +18,7 @@ spec:
         - name: product-ui
           image: davidcamelo/product-ui:main
           ports:
-            - containerPort: 4173
+            - containerPort: 80
               protocol: TCP
           imagePullPolicy: Always
       restartPolicy: Always

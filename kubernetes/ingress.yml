@@ -16,7 +16,7 @@ spec:
               service:
                 name: product-ui
                 port:
-                  number: 4173
+                  number: 80
   tls:
     - hosts:
         - product-ui.davidcamelo.com
